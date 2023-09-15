@@ -3,7 +3,14 @@ import 'package:tutorial1/modelo/efemerides_fun.dart';
 List<EventoHistorico> eventosNacimientos = [
   EventoHistorico(
       titulo:
-          'El coronel republicano Ascensión Correa, triunfante, expediciona sobre la región del Mayo. Correa nació en Santiago Ixcuintla, Nayarit, e inició su carrera militar como soldado raso durante la intervención norteamericana. En las guerras de Reforma e Intervención Francesa militó al lado de los liberales, bajo las órdenes del general Ramón Corona y con éste llegó a Sinaloa y se le dio el mando del Batallón Hidalgo. Siendo coronel vino al Estado como segundo jefe del general Angel Martínez y asistió a la toma de Alamos el 7 de enero de ese año, Posteriormente participó en varias batallas dentro del Estado y nuevamente fue llamado por el general Corona, jefe del Ejército de Oriente. Su muerte ocurrió el 23 de enero de 1870, cuando había ascendido a general.',
+          'El coronel republicano Ascensión Correa, triunfante, expediciona sobre la región del Mayo. '
+              'Correa nació en Santiago Ixcuintla, Nayarit, e inició su carrera militar como soldado raso '
+              'durante la intervención norteamericana. En las guerras de Reforma e Intervención Francesa'
+              ' militó al lado de los liberales, bajo las órdenes del general Ramón Corona y con éste llegó '
+              'a Sinaloa y se le dio el mando del Batallón Hidalgo. Siendo coronel vino al Estado como segundo '
+              'jefe del general Angel Martínez y asistió a la toma de Alamos el 7 de enero de ese año, Posteriormente'
+              ' participó en varias batallas dentro del Estado y nuevamente fue llamado por el general Corona, '
+              'jefe del Ejército de Oriente. Su muerte ocurrió el 23 de enero de 1870, cuando había ascendido a general.',
       ano: 1866,
       fecha: DateTime(1866, 1, 11)),
   EventoHistorico(
