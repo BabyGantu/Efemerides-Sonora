@@ -144,6 +144,7 @@ class _ParticipaState extends State<ParticipaPage> {
                       letterSpacing: 0.5, // Ajusta el espaciado entre letras
                     ),
                 ),
+                
                 Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: Column(
