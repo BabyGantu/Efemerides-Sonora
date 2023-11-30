@@ -8,6 +8,7 @@ import 'package:tutorial1/pag_acont.dart';
 import 'package:tutorial1/pag_intro.dart';
 import 'package:tutorial1/pag_nac.dart';
 import 'package:tutorial1/pag_def.dart';
+import 'package:tutorial1/participa.dart';
 import 'package:tutorial1/searchdelegate.dart';
 import 'package:tutorial1/temas/dark_theme.dart';
 import 'package:tutorial1/temas/light_theme.dart';
@@ -254,6 +255,14 @@ class _PagMainState extends State<PagPrincipal> {
                     secondary: const Icon(Icons.dark_mode),
                   ),
                 ),
+
+                const PopupMenuItem<String>(
+                  value: 'participa',
+                  child: ListTile(
+                    leading: Icon(Icons.add),
+                    title: Text('¡Participa!'),
+                  ),
+                ),
                 const PopupMenuItem<String>(
                   value: 'acerca_de',
                   child: ListTile(
@@ -283,6 +292,12 @@ class _PagMainState extends State<PagPrincipal> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AboutPage()),
+                    );
+                    break;
+                  case 'participa':
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ParticipaPage(_fontSize)),
                     );
                     break;
                 }
