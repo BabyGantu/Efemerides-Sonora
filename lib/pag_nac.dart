@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:tutorial1/datos/efemerides_nac.dart';
 import 'package:tutorial1/modelo/efemerides_fun.dart';
 import 'package:tutorial1/ventanacompartir.dart';
+import 'package:tutorial1/main.dart';
 
 class PagNacimientos extends StatefulWidget {
   final DateTime? fechaElegida;
@@ -51,10 +52,14 @@ class _PagNacimientosState extends State<PagNacimientos> {
         eventosPorMes[month] = [];
       }
       eventosPorMes[month]!.add(evento);
+      if(eventosPorMes.isNotEmpty){
+      notNac= true;
+      }
     }
 
     // Construir lista de widgets
     eventosPorMes.forEach((month, eventos) {
+
       if (widget.fechaElegida != null) {
         // Encabezado con día seleccionado
         final selectedDate = widget.fechaElegida!;
@@ -141,11 +146,16 @@ class _PagNacimientosState extends State<PagNacimientos> {
       });
     });
 
-    return ListView.builder(
+    return listViewItems.isEmpty
+        ? Center(
+      child: Text('No se encontraron nacimientos con esta fecha'),
+    )
+        : ListView.builder(
       itemCount: listViewItems.length,
       itemBuilder: (context, index) {
         return listViewItems[index];
       },
     );
+
   }
 }

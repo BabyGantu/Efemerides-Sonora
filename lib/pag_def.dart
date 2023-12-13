@@ -140,7 +140,11 @@ class _PagDefuncionesState extends State<PagDefunciones> {
       });
     });
 
-    return ListView.builder(
+    return listViewItems.isEmpty
+        ? Center(
+      child: Text('No se encontraron defunciones con esta fecha'),
+    )
+        : ListView.builder(
       itemCount: listViewItems.length,
       itemBuilder: (context, index) {
         return listViewItems[index];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart';
+ //import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tutorial1/acercade.dart';
 
@@ -29,6 +29,9 @@ void main() {
 
 ThemeManager _themeManager = ThemeManager();
 bool mostrarFiltro = false;
+bool notAcon = false;
+bool notNac = false;
+bool notDef = false;
 
 class MyApp extends StatefulWidget {
   @override
@@ -228,7 +231,8 @@ class _PagMainState extends State<PagPrincipal> {
   }
 
   DateTime? selectedMonth;
-  Future<void> _showMonthPicker(BuildContext context) async {
+
+  /*Future<void> _showMonthPicker(BuildContext context) async {
     showMonthPicker(
       context: context,
       initialDate: selectedMonth ?? DateTime.now(),
@@ -243,7 +247,7 @@ class _PagMainState extends State<PagPrincipal> {
       }
     });
   }
-
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -362,15 +366,8 @@ class _PagMainState extends State<PagPrincipal> {
           bottom: const TabBar(
             labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
             tabs: [
-              Tab(
-                text: 'Acontecimientos',
-                icon: Icon(Icons.event),
-
-              ),
-              Tab(
-                text: 'Nacimientos',
-                icon: Icon(Icons.cake),
-              ),
+              CustomTab(text: 'Acontecimientos', icon: Icons.event),
+              CustomTab(text: 'Nacimientos', icon: Icons.cake),
               Tab(
                 text: 'Defunciones',
                 icon: Icon(Icons.account_circle),
@@ -408,7 +405,7 @@ class _PagMainState extends State<PagPrincipal> {
                           child: const Text('Quitar filtros',style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
-                            color: Colors.white,
+                            //color: Colors.white,
                           ),),
                         ),
 
@@ -497,3 +494,60 @@ class _PagMainState extends State<PagPrincipal> {
 
 
 }
+
+class CustomTab extends StatelessWidget {
+  final String text;
+  final IconData icon;
+
+  const CustomTab({required this.text, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Tab(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            children: [
+              Icon(icon),
+              if (notNac)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 13,
+                  bottom: 10,
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.red, // Color del globo de notificación
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 20,
+                      minHeight: 20,
+
+                    ),
+                    child: Center(
+                      child: Text(
+                        '1', // Puedes cambiar esto por el número de notificaciones
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          SizedBox(height: 4), // Espacio entre el icono y el texto
+          Text(
+            text,
+            style: TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

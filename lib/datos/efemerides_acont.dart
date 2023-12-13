@@ -903,7 +903,7 @@ List<EventoHistorico> eventosAcontecimientos = [
       fecha: DateTime(1710, 7, 18)),
   EventoHistorico(
       titulo:
-      'La Secretaria de Fomento otorgó a los señores Roberto Symondy David Ferguson, una concesión para que por sf o por la empresa que organizaran, pudieran construir un ferrocarril de Guaymas a Paso del Norte (hoy Ciudad Juárez). El plazo para la concesión fue de 99 años, con una subvención de $7,000.00 por kilómetro herrado y un derecho de vía de 70 metros.
+      'La Secretaria de Fomento otorgó a los señores Roberto Symondy David Ferguson, una concesión para que por sf o por la empresa que organizaran, pudieran construir un ferrocarril de Guaymas a Paso del Norte (hoy Ciudad Juárez). El plazo para la concesión fue de 99 años, con una subvención de \$7,000.00 por kilómetro herrado y un derecho de vía de 70 metros.'
 ' Las obras de construcción se empezaron en Punta Arenas el 6 de '
 'mayo de 1880, por un grupo de trabajadores a las órdenes del '
 'señor José Mitchel. A las cuatro de la tarde del 4 de noviembre '

@@ -141,7 +141,11 @@ class _PagAcontecimientosState extends State<PagAcontecimientos> {
       });
     });
 
-    return ListView.builder(
+    return listViewItems.isEmpty
+        ? Center(
+      child: Text('No se encontraron acontecimientos con esta fecha'),
+    )
+        : ListView.builder(
       itemCount: listViewItems.length,
       itemBuilder: (context, index) {
         return listViewItems[index];
