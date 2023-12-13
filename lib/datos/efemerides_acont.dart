@@ -903,6 +903,28 @@ List<EventoHistorico> eventosAcontecimientos = [
       fecha: DateTime(1710, 7, 18)),
   EventoHistorico(
       titulo:
+      'La Secretaria de Fomento otorgó a los señores Roberto Symondy David Ferguson, una concesión para que por sf o por la empresa que organizaran, pudieran construir un ferrocarril de Guaymas a Paso del Norte (hoy Ciudad Juárez). El plazo para la concesión fue de 99 años, con una subvención de $7,000.00 por kilómetro herrado y un derecho de vía de 70 metros.
+' Las obras de construcción se empezaron en Punta Arenas el 6 de '
+'mayo de 1880, por un grupo de trabajadores a las órdenes del '
+'señor José Mitchel. A las cuatro de la tarde del 4 de noviembre '
+'del mismo año, se probó en Guaymas la primera locomotora, con '
+'el júbilo desbordante de ciudadanos que estuvieron presentes en '
+'ese acontecimiento.'
+'Antes de terminar 1880, los empresarios consiguieron el cambio '
+'de la concesión, dejando pendiente et tramo de Hennosillo a Paso '
+'del Norte, substituyéndolo por el de Hennosillo al rancho Los '
+'Nogales, en la frontera con los Estados Unidos. '
+'La terminación del primer tramo Guaymas-Hennosillo tuvo lugar '
+'el 4 de noviembre del siguiente afio, con la presencia en el viaje '
+'inaugural del gobernador del Estado, licenciado Carlos Rodrigo '
+'Ortiz Retes.'
+'El último riel del Ferrocarril de Sonora se instaló en el sur de '
+'Nogales el 16 de octubre de 1882, y la· inauguración oficial se '
+'realizó el 23 del mismo mes. ',
+      ano: 1877,
+      fecha: DateTime(1877, 7, 19)),
+  EventoHistorico(
+      titulo:
       'Se termina la construcción de la presa del Río Bavispe. El Río Bavispe corresponde a la vertiente occidental. Nace en la jurisdicción de la Colonia García, Municipio de Casas Grandes, Chihuahua, penetra al Municipio de Bacerac y luego pasa al de Bavispe, ambos de Sonora, y el último le da su nombre. En Bavispe se unen los ríos de San Bernardino, que tiene su origen en Arizona, y el de Batepito que procede del Municipio de Fronteras, formando grandes caudales antes de ser cortado por la Presa de la Angostura.',
       ano: 1941,
       fecha: DateTime(1941, 7, 21)),
@@ -1048,7 +1070,7 @@ List<EventoHistorico> eventosAcontecimientos = [
       fecha: DateTime(1843, 8, 26)),
   EventoHistorico(
       titulo:
-      'Por un incidente inesperado y de poca importancia, aparente­mente, fuerzas norteamericanas invaden Nogales y el pueblo y unos cuantos soldados de línea se enfrentan a los invasores.',
+      'Por un incidente inesperado y de poca importancia, aparentemente, fuerzas norteamericanas invaden Nogales y el pueblo y unos cuantos soldados de línea se enfrentan a los invasores.',
       ano: 1918,
       fecha: DateTime(1918, 8, 27)),
   EventoHistorico(

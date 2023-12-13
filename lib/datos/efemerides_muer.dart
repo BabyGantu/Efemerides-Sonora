@@ -506,7 +506,7 @@ List<EventoHistorico> eventosDefunciones = [
       fecha: DateTime(1892, 8, 27)),
   EventoHistorico(
       titulo:
-      'Fallece en Los Ángeles, California, el ex gobernador don Luis Emeterio Torres. El general Torres se convirtió en representante digámoslo así­ del nuevo caudillo de México, el general Porfirio Díaz, formando un triunvirato con los señores Ramón Corral y Rafael Izábal, que gobernarían alternándose durante más de treinta años. En el siglo pasado se distinguieron Torres y Corral como los gobernadores que dejaron para la posteridad un desarrollo material. En 1911 el general Luis E. Torres marchó al exilio y para su sostenimiento y el de su esposa doña Amelia Monteverde de Torres, tuvo que trabajar hasta una edad muy avanzada.',
+      'Fallece en Los Ángeles, California, el ex gobernador don Luis Emeterio Torres. El general Torres se convirtió en representante digámoslo así del nuevo caudillo de México, el general Porfirio Díaz, formando un triunvirato con los señores Ramón Corral y Rafael Izábal, que gobernarían alternándose durante más de treinta años. En el siglo pasado se distinguieron Torres y Corral como los gobernadores que dejaron para la posteridad un desarrollo material. En 1911 el general Luis E. Torres marchó al exilio y para su sostenimiento y el de su esposa doña Amelia Monteverde de Torres, tuvo que trabajar hasta una edad muy avanzada.',
       ano: 1935,
       fecha: DateTime(1935, 9, 9)),
   EventoHistorico(
@@ -683,7 +683,7 @@ List<EventoHistorico> eventosDefunciones = [
       titulo:
       'Muere en Nacozari Jesús García, héroe hermosillense, salvando al pueblo de la explosión de un tren cargado de dinamita, sacando al convoy de la población cuando se estaba incendiando un vagón. Jesús García fue denominado internacionalmente como "Héroe de la Humanidad".',
       ano: 1907,
-      fecha: DateTime(1907, 11, 2)),
+      fecha: DateTime(1907, 11, 7)),
   EventoHistorico(
       titulo:
       'Fallece en París Ramón Corral, ex gobernador del Estado, ex secretario de Gobernación y exvicepresidente de la República. El señor Corral nació en la Hacienda de las Mercedes, Municipio de Álamos, el 12 de enero de 1854. Fueron sus padres don Fulgencío F. Corral y doña Francisca Almada y Verdugo. Cursó la educación primaria en Chínipas, Chihuahua, adonde se habían trasladado los Corral. En 1873 regresó a Álamos con su familia, ya que su padre había fallecido-y él estaba a cargo de su madre y sus hermanos. A partir de esa fecha comenzó a tomar parte en la política contra el general Pesqueira, por lo que fue perseguido y obligado a volver a Chínipas temporalmente. Triunfa la oposición y el señor Corral emprende una carrera política ascendente hasta 191 O, después de ser diputado local, diputado federal, secretario de Gobierno, gobernador varias veces, secretario de Gobernación y finalmente vicepresidente de México. Don Ramón Corral fue un hombre muy dinámico, magnífico gobernador y hombre de negocios. Cuando se tuvo noticia en la Ciudad de México, de su fallecimiento, las cámaras legislativas federales decretaron tres días de luto.',
