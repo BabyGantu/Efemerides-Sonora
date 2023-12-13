@@ -74,16 +74,24 @@ class EventoSearchDelegate extends SearchDelegate<EventoHistorico> {
 
   @override
   Widget buildResults(BuildContext context) {
-    
+
     final List<EventoHistorico> resultados = []
       ..addAll(eventosAcontecimientos)
       ..addAll(eventosDefunciones)
       ..addAll(eventosNacimientos);
 
     final List<EventoHistorico> filteredResults = resultados
-        .where((evento) => removeAccents(evento.titulo.toLowerCase())
-            .contains(removeAccents(query.toLowerCase())))
+        .where((evento) {
+      final String titulo = removeAccents(evento.titulo.toLowerCase());
+      final String queryLowerCase = removeAccents(query.toLowerCase());
+
+      // Verifica si el título, el año o la fecha contienen la cadena de búsqueda
+      return evento.ano.toString().contains(queryLowerCase) ||
+          evento.fecha.toString().contains(queryLowerCase) ||
+          titulo.contains(queryLowerCase) ;
+    })
         .toList();
+
 
     return ListView.builder(
       itemCount: filteredResults.length,
@@ -137,9 +145,17 @@ class EventoSearchDelegate extends SearchDelegate<EventoHistorico> {
       ..addAll(eventosNacimientos);
 
     final List<EventoHistorico> filteredSuggestions = sugerencias
-        .where((evento) => removeAccents(evento.titulo.toLowerCase())
-            .contains(removeAccents(query.toLowerCase())))
+        .where((evento) {
+      final String titulo = removeAccents(evento.titulo.toLowerCase());
+      final String queryLowerCase = removeAccents(query.toLowerCase());
+
+      // Verifica si el título, el año o la fecha contienen la cadena de búsqueda
+      return evento.ano.toString().contains(queryLowerCase) ||
+          evento.fecha.toString().contains(queryLowerCase) ||
+          titulo.contains(queryLowerCase) ;
+    })
         .toList();
+
 
     return ListView.builder(
       itemCount: filteredSuggestions.length,

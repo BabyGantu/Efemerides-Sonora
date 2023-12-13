@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tutorial1/acercade.dart';
 
@@ -27,6 +28,7 @@ void main() {
 }
 
 ThemeManager _themeManager = ThemeManager();
+bool mostrarFiltro = false;
 
 class MyApp extends StatefulWidget {
   @override
@@ -110,6 +112,7 @@ class _PagMainState extends State<PagPrincipal> {
     if (fechaSeleccionada != null) {
       setState(() {
         fechaElegida = fechaSeleccionada;
+        mostrarFiltro = true; // Muestra el Card cuando se selecciona una fecha
       });
     }
   }
@@ -197,10 +200,55 @@ class _PagMainState extends State<PagPrincipal> {
     }
   }
 
+  Future<void> _showMonthAlertDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Selecciona un Mes'),
+          content: Column(
+            children: [
+              _buildMonthButton(context, 'Enero'),
+              _buildMonthButton(context, 'Febrero'),
+              _buildMonthButton(context, 'Marzo'),
+              _buildMonthButton(context, 'Abril'),
+              _buildMonthButton(context, 'Mayo'),
+              _buildMonthButton(context, 'Junio'),
+              _buildMonthButton(context, 'Julio'),
+              _buildMonthButton(context, 'Agosto'),
+              _buildMonthButton(context, 'Septiembre'),
+              _buildMonthButton(context, 'Octubre'),
+              _buildMonthButton(context, 'Noviembre'),
+              _buildMonthButton(context, 'Diciembre'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  DateTime? selectedMonth;
+  Future<void> _showMonthPicker(BuildContext context) async {
+    showMonthPicker(
+      context: context,
+      initialDate: selectedMonth ?? DateTime.now(),
+      firstDate: DateTime(1400),
+      lastDate: DateTime.now(),headerColor: Colors.black54
+      //headerColor: lightTheme.primaryColor,
+    ).then((selectedDate) {
+      if (selectedDate != null) {
+        setState(() {
+          selectedMonth = selectedDate;
+        });
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      animationDuration: const Duration(milliseconds: 100),
+      animationDuration: const Duration(milliseconds: 300),
       initialIndex: 1,
       length: 3,
       child: Scaffold(
@@ -217,11 +265,12 @@ class _PagMainState extends State<PagPrincipal> {
                       eventosDefunciones: eventosDefunciones,
                       eventosNacimientos: eventosNacimientos,
                     ),
+
                   );
                 },
                 icon: const Icon(Icons.search),
               ),
-            
+
             PopupMenuButton<String>(
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem<String>(
@@ -247,15 +296,21 @@ class _PagMainState extends State<PagPrincipal> {
                 ),
                 PopupMenuItem<String>(
                   value: 'modo_oscuro',
-                  child: SwitchListTile(
-                    title: const Text('Tema Oscuro'),
-                    value: _themeManager.themeMode == ThemeMode.dark,
-                    onChanged: (newValue) =>
-                        _themeManager.toggleTheme(newValue),
-                    secondary: const Icon(Icons.dark_mode),
+                  child: StatefulBuilder(
+                    builder: (context, setState) {
+                      return SwitchListTile(
+                        title: const Text('Tema Oscuro'),
+                        value: _themeManager.themeMode == ThemeMode.dark,
+                        onChanged: (newValue) {
+                          _themeManager.toggleTheme(newValue);
+                          // Forzar la reconstrucción del PopupMenuButton
+                          setState(() {});
+                        },
+                        secondary: const Icon(Icons.dark_mode),
+                      );
+                    },
                   ),
                 ),
-
                 const PopupMenuItem<String>(
                   value: 'participa',
                   child: ListTile(
@@ -305,10 +360,12 @@ class _PagMainState extends State<PagPrincipal> {
             ),
           ],
           bottom: const TabBar(
+            labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
             tabs: [
               Tab(
                 text: 'Acontecimientos',
                 icon: Icon(Icons.event),
+
               ),
               Tab(
                 text: 'Nacimientos',
@@ -321,26 +378,102 @@ class _PagMainState extends State<PagPrincipal> {
             ],
           ),
         ),
-        body: TabBarView(
+
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildTabItem(PagAcontecimientos(
-                fechaElegida: fechaElegida, fontSize: _fontSize)),
-            _buildTabItem(PagNacimientos(
-                fechaElegida: fechaElegida, fontSize: _fontSize)),
-            _buildTabItem(PagDefunciones(
-                fechaElegida: fechaElegida, fontSize: _fontSize)),
+            if (mostrarFiltro)
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Card(
+                  elevation: 5.0,
+                  margin: EdgeInsets.all(6.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(7.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: 1.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            resetFiltros();
+                            setState(() {
+                              mostrarFiltro = false;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(),
+                          child: const Text('Quitar filtros',style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _buildTabItem(PagAcontecimientos(
+                    fechaElegida: fechaElegida,
+                    fontSize: _fontSize,
+                  )),
+                  _buildTabItem(PagNacimientos(
+                    fechaElegida: fechaElegida,
+                    fontSize: _fontSize,
+                  )),
+                  _buildTabItem(PagDefunciones(
+                    fechaElegida: fechaElegida,
+                    fontSize: _fontSize,
+                  )),
+                ],
+              ),
+            ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          onPressed: _showDatePicker,
-          child: const Icon(
-            Icons.calendar_month_outlined,
-            size: 20,
-          ),
-        ),
+
+
+        floatingActionButton:
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  heroTag: "fecha",
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  onPressed: _showDatePicker,
+                  child: const Icon(
+                    Icons.calendar_month_outlined,
+                    size: 20,
+                  ),
+                ),
+                SizedBox(height: 16),
+                /**FloatingActionButton(
+                  heroTag: "mes",
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  onPressed: () => _showMonthPicker(context),
+                  child: const Icon(
+                    Icons.calendar_month_sharp,
+                    size: 20,
+                  ),
+                ),**/
+              ],
+            ),
+
+
+
+
       ),
     );
+
+
+
   }
 
   Widget _buildTabItem(Widget page) {
@@ -349,4 +482,18 @@ class _PagMainState extends State<PagPrincipal> {
       child: page,
     );
   }
+
+  Widget _buildMonthButton(BuildContext context, String month) {
+    return ElevatedButton(
+      onPressed: () {
+        // Hacer algo con el mes seleccionado
+        print('Mes seleccionado: $month');
+        Navigator.of(context).pop(); // Cerrar el AlertDialog
+      },
+      child: Text(month),
+    );
+  }
+
+
+
 }
