@@ -134,7 +134,7 @@ class _PagNacimientosState extends State<PagNacimientos> {
                 DateFormat('dd/MMMM/yyyy', 'es').format(evento.fecha),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+                  //color:Colors.black,
                 ),
               ),
               onLongPress: () {

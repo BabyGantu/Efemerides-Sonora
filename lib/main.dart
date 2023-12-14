@@ -442,8 +442,9 @@ class _PagMainState extends State<PagPrincipal> {
             ),
           ],
           bottom: TabBar(
+            indicatorSize: TabBarIndicatorSize.tab,
             key: UniqueKey(),
-            labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
+            labelPadding: EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
             tabs: [
               CustomTabAcon(key: UniqueKey(), text: 'Acontecimientos', icon: Icons.event),
               CustomTabNac(key: UniqueKey(), text: 'Nacimientos', icon: Icons.cake),
@@ -616,11 +617,16 @@ class CustomTabNac extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(height: 4), // Espacio entre el icono y el texto
-          Text(
-            text,
-            style: TextStyle(fontSize: 12),
-          ),
+          SizedBox(height: 4),
+          Column(
+            children: [
+              Text(
+                text,
+                style: TextStyle(fontSize: 15,),
+              ),
+            ],
+          )// Espacio entre el icono y el texto
+
         ],
       ),
     );
@@ -675,7 +681,7 @@ class CustomTabAcon extends StatelessWidget {
           SizedBox(height: 4), // Espacio entre el icono y el texto
           Text(
             text,
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 15),
           ),
         ],
       ),
@@ -731,7 +737,7 @@ class CustomTabDef extends StatelessWidget {
           SizedBox(height: 4), // Espacio entre el icono y el texto
           Text(
             text,
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 15),
           ),
         ],
       ),
