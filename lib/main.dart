@@ -4,6 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
  //import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tutorial1/acercade.dart';
+import 'package:tutorial1/modelo/efemerides_fun.dart';
 
 import 'package:tutorial1/pag_acont.dart';
 import 'package:tutorial1/pag_intro.dart';
@@ -20,6 +21,7 @@ import 'package:tutorial1/ventanacompartir.dart';
 import 'datos/efemerides_acont.dart';
 import 'datos/efemerides_muer.dart';
 import 'datos/efemerides_nac.dart';
+
 
 void main() {
   initializeDateFormatting('es', 'MX').then((_) {
@@ -116,19 +118,95 @@ class _PagMainState extends State<PagPrincipal> {
       setState(() {
         fechaElegida = fechaSeleccionada;
         mostrarFiltro = true; // Muestra el Card cuando se selecciona una fecha
+
+
+        List<EventoHistorico> getEventosFiltrados() {
+          if (fechaElegida == null) {
+            return eventosNacimientos;
+          } else {
+            return eventosNacimientos
+                .where((evento) =>
+            evento.fecha.month == fechaElegida!.month &&
+                evento.fecha.day == fechaElegida!.day)
+                .toList();
+          }
+        }
+
+        List<EventoHistorico> getEventosFiltradosAcon() {
+          if (fechaElegida == null) {
+            return eventosAcontecimientos;
+          } else {
+            return eventosAcontecimientos
+                .where((evento) =>
+            evento.fecha.month == fechaElegida!.month &&
+                evento.fecha.day == fechaElegida!.day)
+                .toList();
+          }
+        }
+        List<EventoHistorico> getEventosFiltradosDef() {
+          if (fechaElegida == null) {
+            return eventosDefunciones;
+          } else {
+            return eventosDefunciones
+                .where((evento) =>
+            evento.fecha.month == fechaElegida!.month &&
+                evento.fecha.day == fechaElegida!.day)
+                .toList();
+          }
+        }
+
+        final eventosFiltrados = getEventosFiltrados();
+        final eventosFiltradosAcon = getEventosFiltradosAcon();
+        final eventosFiltradosDef = getEventosFiltradosDef();
+        if(eventosFiltrados.isNotEmpty){
+          notNac = true;
+        }else{
+          notNac = false;
+        }
+
+        if(eventosFiltradosAcon.isNotEmpty){
+          notAcon = true;
+        }else{
+          notAcon = false;
+        }
+
+        if(eventosFiltradosDef.isNotEmpty){
+          notDef = true;
+        }else{
+          notDef = false;
+        }
+
       });
     }
   }
 
+  void actualizarNotNac(bool nuevoValor) {
+    setState(() {
+      notNac = nuevoValor;
+
+    });
+  }
+
+  void verifica(DateTime? fechaElegida) {
+
+  }
+
+
   void resetFiltros() {
     setState(() {
       fechaElegida = null;
+      notDef = false;
+      notAcon = false;
+      notNac = false;
     });
   }
 
   Future<void> resetFiltros1() async {
     setState(() {
       fechaElegida = null;
+      notDef = false;
+      notAcon = false;
+      notNac = false;
     });
 
     const snackBar = SnackBar(
@@ -363,15 +441,13 @@ class _PagMainState extends State<PagPrincipal> {
               },
             ),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
+            key: UniqueKey(),
             labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
             tabs: [
-              CustomTab(text: 'Acontecimientos', icon: Icons.event),
-              CustomTab(text: 'Nacimientos', icon: Icons.cake),
-              Tab(
-                text: 'Defunciones',
-                icon: Icon(Icons.account_circle),
-              ),
+              CustomTabAcon(key: UniqueKey(), text: 'Acontecimientos', icon: Icons.event),
+              CustomTabNac(key: UniqueKey(), text: 'Nacimientos', icon: Icons.cake),
+              CustomTabDef(key: UniqueKey(), text: 'Defunciones', icon: Icons.account_circle),
             ],
           ),
         ),
@@ -495,11 +571,11 @@ class _PagMainState extends State<PagPrincipal> {
 
 }
 
-class CustomTab extends StatelessWidget {
+class CustomTabNac extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const CustomTab({required this.text, required this.icon});
+  const CustomTabNac({required this.text, required this.icon, required UniqueKey key});
 
   @override
   Widget build(BuildContext context) {
@@ -511,6 +587,118 @@ class CustomTab extends StatelessWidget {
             children: [
               Icon(icon),
               if (notNac)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 13,
+                  bottom: 10,
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.red, // Color del globo de notificación
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 20,
+                      minHeight: 20,
+
+                    ),
+                    child: Center(
+                      child: Text(
+                        '1', // Puedes cambiar esto por el número de notificaciones
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          SizedBox(height: 4), // Espacio entre el icono y el texto
+          Text(
+            text,
+            style: TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomTabAcon extends StatelessWidget {
+  final String text;
+  final IconData icon;
+
+  const CustomTabAcon({required this.text, required this.icon, required UniqueKey key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Tab(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            children: [
+              Icon(icon),
+              if (notAcon)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 13,
+                  bottom: 10,
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.red, // Color del globo de notificación
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 20,
+                      minHeight: 20,
+
+                    ),
+                    child: Center(
+                      child: Text(
+                        '1', // Puedes cambiar esto por el número de notificaciones
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          SizedBox(height: 4), // Espacio entre el icono y el texto
+          Text(
+            text,
+            style: TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomTabDef extends StatelessWidget {
+  final String text;
+  final IconData icon;
+
+  const CustomTabDef({required this.text, required this.icon, required UniqueKey key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Tab(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            children: [
+              Icon(icon),
+              if (notDef)
                 Positioned(
                   top: 0,
                   right: 0,

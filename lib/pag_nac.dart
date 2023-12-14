@@ -19,6 +19,7 @@ class PagNacimientos extends StatefulWidget {
 }
 
 class _PagNacimientosState extends State<PagNacimientos> {
+  late final Function(bool) actualizarNotNac;
   List<EventoHistorico> getEventosFiltrados() {
     if (widget.fechaElegida == null) {
       return eventosNacimientos;
@@ -52,16 +53,15 @@ class _PagNacimientosState extends State<PagNacimientos> {
         eventosPorMes[month] = [];
       }
       eventosPorMes[month]!.add(evento);
-      if(eventosPorMes.isNotEmpty){
-      notNac= true;
-      }
+
     }
 
     // Construir lista de widgets
     eventosPorMes.forEach((month, eventos) {
-
       if (widget.fechaElegida != null) {
         // Encabezado con día seleccionado
+
+
         final selectedDate = widget.fechaElegida!;
         listViewItems.add(
           Card(
@@ -148,14 +148,13 @@ class _PagNacimientosState extends State<PagNacimientos> {
 
     return listViewItems.isEmpty
         ? Center(
-      child: Text('No se encontraron nacimientos con esta fecha'),
-    )
+            child: Text('No se encontraron nacimientos con esta fecha'),
+          )
         : ListView.builder(
-      itemCount: listViewItems.length,
-      itemBuilder: (context, index) {
-        return listViewItems[index];
-      },
-    );
-
+            itemCount: listViewItems.length,
+            itemBuilder: (context, index) {
+              return listViewItems[index];
+            },
+          );
   }
 }
