@@ -128,7 +128,7 @@ class _PagDefuncionesState extends State<PagDefunciones> {
                 DateFormat('dd/MMMM/yyyy', 'es').format(evento.fecha),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+                  //color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               onLongPress: () {

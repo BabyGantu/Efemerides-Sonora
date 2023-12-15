@@ -21,6 +21,7 @@ import 'package:tutorial1/ventanacompartir.dart';
 import 'datos/efemerides_acont.dart';
 import 'datos/efemerides_muer.dart';
 import 'datos/efemerides_nac.dart';
+import 'municipio.dart';
 
 
 void main() {
@@ -336,7 +337,7 @@ class _PagMainState extends State<PagPrincipal> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          title: const Text('Efemerides'),
+          title: const Text('Efemérides de Sonora'),
           actions: <Widget>[
               IconButton(
                 onPressed: () {
@@ -407,6 +408,13 @@ class _PagMainState extends State<PagPrincipal> {
                     title: Text('Acerca de'),
                   ),
                 ),
+                const PopupMenuItem<String>(
+                  value: 'municipio',
+                  child: ListTile(
+                    leading: Icon(Icons.info),
+                    title: Text('municipio'),
+                  ),
+                ),
               ],
               onSelected: (String value) {
                 //  lógica de lo que ocurre al seleccionar un elemento del menú
@@ -435,6 +443,12 @@ class _PagMainState extends State<PagPrincipal> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ParticipaPage(_fontSize)),
+                    );
+                    break;
+                  case 'municipio':
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MunicipioPage(_fontSize)),
                     );
                     break;
                 }
@@ -524,7 +538,8 @@ class _PagMainState extends State<PagPrincipal> {
                   onPressed: _showDatePicker,
                   child: const Icon(
                     Icons.calendar_month_outlined,
-                    size: 20,
+                    size: 35,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: 16),

@@ -129,7 +129,7 @@ class _PagAcontecimientosState extends State<PagAcontecimientos> {
                 DateFormat('dd/MMMM/yyyy', 'es').format(evento.fecha),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+                  //color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               onLongPress: () {

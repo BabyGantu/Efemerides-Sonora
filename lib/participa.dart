@@ -86,20 +86,27 @@ class _ParticipaState extends State<ParticipaPage> {
   }
   Future<bool> sendEmail(String name, String lastName, String email, String comment) async {
     // Configuración del servidor SMTP
-    final smtpServer = SmtpServer('outlook.office365.com',
+    final smtpServer = SmtpServer('smtp-mail.outlook.com',
         port: 587,
-        username: 'adrianibarra200916@hotmail.com',
-        password: 'cyquuqvosgkliakj');
+        username: 'efemerides@redescubramossonora.mx',
+        password: 'cxynkwzvzczxxzmd',
+      // Habilitar STARTTLS
+      ssl: false,
+      allowInsecure: false,
+      ignoreBadCertificate: true,
+
+    );
+
 
     // Cuerpo del mensaje
     final message = Message()
-      ..from = Address('adrianibarra200916@hotmail.com')
+      ..from = Address('efemerides@redescubramossonora.mx')
     //..recipients.add('museodelosyaquis@isc.gob.mx')
-      ..recipients.add('adrianibarra200916@hotmail.com')
+      ..recipients.add('efemerides@redescubramossonora.mx')
       ..subject = 'Correo de participación de la aplicación Efemérides Sonora.'
       ..html = '''
         <h1>Correo de participación de la aplicación Efemérides Sonora.</h1>
-        <p><strong>Nombre completo:</strong> $name</p>
+        <p><strong>Nombre:</strong> $name</p>
         <p><strong>Telefono:</strong> $lastName</p>
         <p><strong>Correo electrónico:</strong> $email</p>
         <p><strong>Comentario:</strong> $comment</p>
@@ -124,12 +131,14 @@ class _ParticipaState extends State<ParticipaPage> {
         title: Text('¡Participa!'),
       ),
       body:Container(
+        //color: Colors.white,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
 
             child: Column(
               children: [
+
                 Text("¡Envíanos tus sugerencias y efemérides para mejorar la aplicación!"
                   ,style: TextStyle(
                     fontSize: 5 + widget.tam_letra,
@@ -192,14 +201,13 @@ class _ParticipaState extends State<ParticipaPage> {
                                     labelText: 'Correo electrónico',
                                   ),
                                   validator: (value) {
-                                    if (value?.isEmpty ?? true) {
-                                      return 'Por favor, ingrese su correo electrónico';
-                                    } else if (!EmailValidator.validate(value!)) {
+                                    if (value != null && value.isNotEmpty && !EmailValidator.validate(value)) {
                                       return 'Por favor, ingrese un correo electrónico válido';
                                     }
-                                    return null;
+                                    return null; // Cambiado para permitir que el campo sea opcional
                                   },
                                 ),
+
                                 TextFormField(
                                   controller: _commentController,
                                   maxLines: null,
@@ -224,6 +232,10 @@ class _ParticipaState extends State<ParticipaPage> {
                                         _showAlertDialog();
                                       }
                                     },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Theme.of(context).colorScheme.primary, // Color del fondo del botón
+                                      onPrimary: Theme.of(context).colorScheme.tertiary, // Color del texto del botón
+                                    ),
                                     child: Text('Enviar mensaje'),
                                   ),
                                 ),
@@ -244,6 +256,10 @@ class _ParticipaState extends State<ParticipaPage> {
 
     );
 }
+
+
+
+
   Future<bool> _canSendEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int lastSentTime = prefs.getInt(_lastSentKey) ?? 0;
