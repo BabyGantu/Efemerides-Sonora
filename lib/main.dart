@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
- //import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:marquee/marquee.dart';
+//import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tutorial1/acercade.dart';
 import 'package:tutorial1/modelo/efemerides_fun.dart';
@@ -17,16 +18,24 @@ import 'package:tutorial1/temas/light_theme.dart';
 import 'package:tutorial1/temas/theme_manager.dart';
 import 'package:tutorial1/ventanacompartir.dart';
 
-
 import 'datos/efemerides_acont.dart';
 import 'datos/efemerides_muer.dart';
 import 'datos/efemerides_nac.dart';
 import 'municipio.dart';
-
+import 'SplashScreen.dart';
 
 void main() {
   initializeDateFormatting('es', 'MX').then((_) {
-    runApp(MyApp());
+    runApp(MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/home': (context) => MyApp(),
+      },
+      onUnknownRoute: (settings) {
+        print('ERROR: no se encuentra ${settings.name}');
+      },
+    ));
   });
 }
 
@@ -88,9 +97,12 @@ class _MyAppState extends State<MyApp> {
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
       home: const PagIntro(),
+      initialRoute: '/',
+      routes: {
+        '/home': (context) => const PagIntro(),
+      },
     );
   }
-
 }
 
 class PagPrincipal extends StatefulWidget {
@@ -113,6 +125,7 @@ class _PagMainState extends State<PagPrincipal> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1400),
       lastDate: DateTime.now(),
+
     );
 
     if (fechaSeleccionada != null) {
@@ -120,15 +133,14 @@ class _PagMainState extends State<PagPrincipal> {
         fechaElegida = fechaSeleccionada;
         mostrarFiltro = true; // Muestra el Card cuando se selecciona una fecha
 
-
         List<EventoHistorico> getEventosFiltrados() {
           if (fechaElegida == null) {
             return eventosNacimientos;
           } else {
             return eventosNacimientos
                 .where((evento) =>
-            evento.fecha.month == fechaElegida!.month &&
-                evento.fecha.day == fechaElegida!.day)
+                    evento.fecha.month == fechaElegida!.month &&
+                    evento.fecha.day == fechaElegida!.day)
                 .toList();
           }
         }
@@ -139,19 +151,20 @@ class _PagMainState extends State<PagPrincipal> {
           } else {
             return eventosAcontecimientos
                 .where((evento) =>
-            evento.fecha.month == fechaElegida!.month &&
-                evento.fecha.day == fechaElegida!.day)
+                    evento.fecha.month == fechaElegida!.month &&
+                    evento.fecha.day == fechaElegida!.day)
                 .toList();
           }
         }
+
         List<EventoHistorico> getEventosFiltradosDef() {
           if (fechaElegida == null) {
             return eventosDefunciones;
           } else {
             return eventosDefunciones
                 .where((evento) =>
-            evento.fecha.month == fechaElegida!.month &&
-                evento.fecha.day == fechaElegida!.day)
+                    evento.fecha.month == fechaElegida!.month &&
+                    evento.fecha.day == fechaElegida!.day)
                 .toList();
           }
         }
@@ -159,24 +172,23 @@ class _PagMainState extends State<PagPrincipal> {
         final eventosFiltrados = getEventosFiltrados();
         final eventosFiltradosAcon = getEventosFiltradosAcon();
         final eventosFiltradosDef = getEventosFiltradosDef();
-        if(eventosFiltrados.isNotEmpty){
+        if (eventosFiltrados.isNotEmpty) {
           notNac = true;
-        }else{
+        } else {
           notNac = false;
         }
 
-        if(eventosFiltradosAcon.isNotEmpty){
+        if (eventosFiltradosAcon.isNotEmpty) {
           notAcon = true;
-        }else{
+        } else {
           notAcon = false;
         }
 
-        if(eventosFiltradosDef.isNotEmpty){
+        if (eventosFiltradosDef.isNotEmpty) {
           notDef = true;
-        }else{
+        } else {
           notDef = false;
         }
-
       });
     }
   }
@@ -184,14 +196,10 @@ class _PagMainState extends State<PagPrincipal> {
   void actualizarNotNac(bool nuevoValor) {
     setState(() {
       notNac = nuevoValor;
-
     });
   }
 
-  void verifica(DateTime? fechaElegida) {
-
-  }
-
+  void verifica(DateTime? fechaElegida) {}
 
   void resetFiltros() {
     setState(() {
@@ -213,7 +221,7 @@ class _PagMainState extends State<PagPrincipal> {
     const snackBar = SnackBar(
       backgroundColor: Color.fromARGB(255, 132, 225, 141),
       behavior: SnackBarBehavior.floating,
-       // Establecer el color de fondo morado
+      // Establecer el color de fondo morado
       content: Text(
         'Mostrando todos los eventos',
         style: TextStyle(
@@ -337,25 +345,48 @@ class _PagMainState extends State<PagPrincipal> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          title: const Text('Efemérides de Sonora'),
+          title:
+          Container(
+            height: 25.0,
+            width: 250,
+            child: Marquee(
+              text: 'Efemérides de Sonora',
+              style: TextStyle(fontSize: 20),
+              scrollAxis: Axis.horizontal,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              blankSpace: 20.0,
+              velocity: 40.0, // Ajusta la velocidad según sea necesario
+              pauseAfterRound: Duration(seconds: 1),
+              startPadding: 10.0,
+              accelerationDuration: Duration(seconds: 1),
+              accelerationCurve: Curves.linear,
+              decelerationDuration: Duration(milliseconds: 500),
+              decelerationCurve: Curves.easeOut,
+            ),
+          ),
           actions: <Widget>[
-              IconButton(
-                onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: EventoSearchDelegate(
-                      eventosAcontecimientos: eventosAcontecimientos,
-                      eventosDefunciones: eventosDefunciones,
-                      eventosNacimientos: eventosNacimientos,
-                    ),
-
-                  );
-                },
-                icon: const Icon(Icons.search),
-              ),
-
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: EventoSearchDelegate(
+                    eventosAcontecimientos: eventosAcontecimientos,
+                    eventosDefunciones: eventosDefunciones,
+                    eventosNacimientos: eventosNacimientos,
+                  ),
+                );
+              },
+              icon: const Icon(Icons.search),
+            ),
             PopupMenuButton<String>(
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: 'municipio',
+                  child: ListTile(
+                    leading: Icon(Icons.location_city),
+                    title: Text('Municipio'),
+                  ),
+                ),
                 const PopupMenuItem<String>(
                   value: 'reiniciar_filtros',
                   child: ListTile(
@@ -408,13 +439,6 @@ class _PagMainState extends State<PagPrincipal> {
                     title: Text('Acerca de'),
                   ),
                 ),
-                const PopupMenuItem<String>(
-                  value: 'municipio',
-                  child: ListTile(
-                    leading: Icon(Icons.info),
-                    title: Text('municipio'),
-                  ),
-                ),
               ],
               onSelected: (String value) {
                 //  lógica de lo que ocurre al seleccionar un elemento del menú
@@ -442,13 +466,15 @@ class _PagMainState extends State<PagPrincipal> {
                   case 'participa':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ParticipaPage(_fontSize)),
+                      MaterialPageRoute(
+                          builder: (context) => ParticipaPage(_fontSize)),
                     );
                     break;
                   case 'municipio':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MunicipioPage(_fontSize)),
+                      MaterialPageRoute(
+                          builder: (context) => MunicipioPage(_fontSize)),
                     );
                     break;
                 }
@@ -458,15 +484,19 @@ class _PagMainState extends State<PagPrincipal> {
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
             key: UniqueKey(),
-            labelPadding: EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
+            labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             tabs: [
-              CustomTabAcon(key: UniqueKey(), text: 'Acontecimientos', icon: Icons.event),
-              CustomTabNac(key: UniqueKey(), text: 'Nacimientos', icon: Icons.cake),
-              CustomTabDef(key: UniqueKey(), text: 'Defunciones', icon: Icons.account_circle),
+              CustomTabAcon(
+                  key: UniqueKey(), text: 'Acontecimientos', icon: Icons.event),
+              CustomTabNac(
+                  key: UniqueKey(), text: 'Nacimientos', icon: Icons.cake),
+              CustomTabDef(
+                  key: UniqueKey(),
+                  text: 'Defunciones',
+                  icon: Icons.account_circle),
             ],
           ),
         ),
-
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -493,13 +523,15 @@ class _PagMainState extends State<PagPrincipal> {
                             });
                           },
                           style: ElevatedButton.styleFrom(),
-                          child: const Text('Quitar filtros',style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            //color: Colors.white,
-                          ),),
+                          child: const Text(
+                            'Quitar filtros',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              //color: Colors.white,
+                            ),
+                          ),
                         ),
-
                       ],
                     ),
                   ),
@@ -525,25 +557,22 @@ class _PagMainState extends State<PagPrincipal> {
             ),
           ],
         ),
-
-
-        floatingActionButton:
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                FloatingActionButton(
-                  heroTag: "fecha",
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  onPressed: _showDatePicker,
-                  child: const Icon(
-                    Icons.calendar_month_outlined,
-                    size: 35,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(height: 16),
-                /**FloatingActionButton(
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: "fecha",
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              onPressed: _showDatePicker,
+              child: const Icon(
+                Icons.calendar_month_outlined,
+                size: 35,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 16),
+            /**FloatingActionButton(
                   heroTag: "mes",
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   onPressed: () => _showMonthPicker(context),
@@ -552,17 +581,10 @@ class _PagMainState extends State<PagPrincipal> {
                     size: 20,
                   ),
                 ),**/
-              ],
-            ),
-
-
-
-
+          ],
+        ),
       ),
     );
-
-
-
   }
 
   Widget _buildTabItem(Widget page) {
@@ -582,16 +604,14 @@ class _PagMainState extends State<PagPrincipal> {
       child: Text(month),
     );
   }
-
-
-
 }
 
 class CustomTabNac extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const CustomTabNac({required this.text, required this.icon, required UniqueKey key});
+  const CustomTabNac(
+      {required this.text, required this.icon, required UniqueKey key});
 
   @override
   Widget build(BuildContext context) {
@@ -617,7 +637,6 @@ class CustomTabNac extends StatelessWidget {
                     constraints: BoxConstraints(
                       minWidth: 20,
                       minHeight: 20,
-
                     ),
                     child: Center(
                       child: Text(
@@ -632,16 +651,16 @@ class CustomTabNac extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(height: 4),
           Column(
             children: [
               Text(
                 text,
-                style: TextStyle(fontSize: 15,),
+                style: TextStyle(
+                  fontSize: 15,
+                ),
               ),
             ],
-          )// Espacio entre el icono y el texto
-
+          ) // Espacio entre el icono y el texto
         ],
       ),
     );
@@ -652,53 +671,69 @@ class CustomTabAcon extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const CustomTabAcon({required this.text, required this.icon, required UniqueKey key});
+  const CustomTabAcon(
+      {required this.text, required this.icon, required UniqueKey key});
 
   @override
   Widget build(BuildContext context) {
     return Tab(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Stack(
-            children: [
-              Icon(icon),
-              if (notAcon)
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  left: 13,
-                  bottom: 10,
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.red, // Color del globo de notificación
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 20,
-                      minHeight: 20,
-
-                    ),
-                    child: Center(
-                      child: Text(
-                        '1', // Puedes cambiar esto por el número de notificaciones
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 9,
+      child: SizedBox(
+        height: 500,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                Icon(icon),
+                if (notAcon)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    left: 13,
+                    bottom: 10,
+                    child: Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.red, // Color del globo de notificación
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 20,
+                        minHeight: 20,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '1', // Puedes cambiar esto por el número de notificaciones
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 9,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-            ],
-          ),
-          SizedBox(height: 4), // Espacio entre el icono y el texto
-          Text(
-            text,
-            style: TextStyle(fontSize: 15),
-          ),
-        ],
+              ],
+            ),
+            SizedBox(height: 4), // Espacio entre el icono y el texto
+            Container(
+              height: 18.0, // Establece la altura según sea necesario
+              child: Marquee(
+                text: text,
+                style: TextStyle(fontSize: 15),
+                scrollAxis: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                blankSpace: 20.0,
+                velocity: 40.0, // Ajusta la velocidad según sea necesario
+                pauseAfterRound: Duration(seconds: 1),
+                startPadding: 10.0,
+                accelerationDuration: Duration(seconds: 1),
+                accelerationCurve: Curves.linear,
+                decelerationDuration: Duration(milliseconds: 500),
+                decelerationCurve: Curves.easeOut,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -708,7 +743,8 @@ class CustomTabDef extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const CustomTabDef({required this.text, required this.icon, required UniqueKey key});
+  const CustomTabDef(
+      {required this.text, required this.icon, required UniqueKey key});
 
   @override
   Widget build(BuildContext context) {
@@ -734,7 +770,6 @@ class CustomTabDef extends StatelessWidget {
                     constraints: BoxConstraints(
                       minWidth: 20,
                       minHeight: 20,
-
                     ),
                     child: Center(
                       child: Text(
@@ -749,14 +784,16 @@ class CustomTabDef extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(height: 4), // Espacio entre el icono y el texto
-          Text(
-            text,
-            style: TextStyle(fontSize: 15),
+          SizedBox(height: 3),
+          Container(
+            height: 18.0,
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 15),
+            ),
           ),
         ],
       ),
     );
   }
 }
-

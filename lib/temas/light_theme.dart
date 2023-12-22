@@ -29,17 +29,24 @@ ThemeData lightTheme = ThemeData(
       // Estilo del texto de la pestaña inactiva
       //iconTheme: IconThemeData(color: Colors.black), // Color de los iconos de la pestaña
     ),
+
     datePickerTheme: const DatePickerThemeData(
+
+      /**
       cancelButtonStyle: ButtonStyle(
         backgroundColor:
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 218, 217, 217)),
         foregroundColor:
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 0, 0, 0)),
       ),
+
       confirmButtonStyle: ButtonStyle(
         backgroundColor:
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 218, 217, 217)),
         foregroundColor:
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 0, 0, 0)),
-      ),
-    ));
+      ),**/
+
+    )
+
+        );

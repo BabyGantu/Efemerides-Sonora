@@ -351,7 +351,7 @@ List<EventoHistorico> eventosNacimientos = [
       fecha: DateTime(1931, 9, 7)),
   EventoHistorico(
       titulo:
-      'Nace en Mazatlán, Sinaloa, la educadora Cm-Iota Fernández de Uruchurtu, que dio a la niñez sonorense los mejores frutos de su vocación. En 1888 se estableció en Hermosillo y se le encomendó la dirección de la Escuela Núm. 1 para niñas. Poco después estableció anexo un curso de educación superior en donde hicieron su carrera numerosas señoritas de la localidad que después fueron a trabajar de profesoras de educación-primaria en las escuelas oficiales del Estado. En 1898 contrajo matrimonio con don Ricardo Uruchurtu y, en 1937 fue jubilada por medio de un decreto de la legislatura focal.',
+      'Nace en Mazatlán, Sinaloa, la educadora Fernández de Uruchurtu, que dio a la niñez sonorense los mejores frutos de su vocación. En 1888 se estableció en Hermosillo y se le encomendó la dirección de la Escuela Núm. 1 para niñas. Poco después estableció anexo un curso de educación superior en donde hicieron su carrera numerosas señoritas de la localidad que después fueron a trabajar de profesoras de educación-primaria en las escuelas oficiales del Estado. En 1898 contrajo matrimonio con don Ricardo Uruchurtu y, en 1937 fue jubilada por medio de un decreto de la legislatura focal.',
       ano: 1862,
       fecha: DateTime(1862, 9, 27)),
   EventoHistorico(
