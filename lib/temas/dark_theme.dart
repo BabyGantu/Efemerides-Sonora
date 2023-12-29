@@ -24,7 +24,7 @@ ThemeData darkTheme = ThemeData(
     // Estilo del texto de la pestaña inactiva
     //iconTheme: IconThemeData(color: Colors.black), // Color de los iconos de la pestaña
   ),
-/**
+
     datePickerTheme: const DatePickerThemeData(
       
       cancelButtonStyle: ButtonStyle(
@@ -37,7 +37,7 @@ ThemeData darkTheme = ThemeData(
       ),
 
     )
-**/
+
 );
     
      

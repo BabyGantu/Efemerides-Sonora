@@ -32,7 +32,7 @@ ThemeData lightTheme = ThemeData(
 
     datePickerTheme: const DatePickerThemeData(
 
-      /**
+
       cancelButtonStyle: ButtonStyle(
         backgroundColor:
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 218, 217, 217)),
@@ -45,7 +45,7 @@ ThemeData lightTheme = ThemeData(
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 218, 217, 217)),
         foregroundColor:
             MaterialStatePropertyAll<Color>(Color.fromARGB(255, 0, 0, 0)),
-      ),**/
+      ),
 
     )
 

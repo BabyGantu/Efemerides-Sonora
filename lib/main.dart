@@ -18,6 +18,7 @@ import 'package:tutorial1/temas/light_theme.dart';
 import 'package:tutorial1/temas/theme_manager.dart';
 import 'package:tutorial1/ventanacompartir.dart';
 
+import 'ayuda.dart';
 import 'datos/efemerides_acont.dart';
 import 'datos/efemerides_muer.dart';
 import 'datos/efemerides_nac.dart';
@@ -27,6 +28,7 @@ import 'SplashScreen.dart';
 void main() {
   initializeDateFormatting('es', 'MX').then((_) {
     runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
@@ -96,10 +98,10 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
-      home: const PagIntro(),
+      home: const PagPrincipal(),
       initialRoute: '/',
       routes: {
-        '/home': (context) => const PagIntro(),
+        '/home': (context) => const PagPrincipal(),
       },
     );
   }
@@ -112,7 +114,7 @@ class PagPrincipal extends StatefulWidget {
   State<PagPrincipal> createState() => _PagMainState();
 }
 
-class _PagMainState extends State<PagPrincipal> {
+class _PagMainState extends State<PagPrincipal> with SingleTickerProviderStateMixin{
   DateTime? fechaElegida;
   TextEditingController searchController = TextEditingController();
   double _fontSize = 16.0; // Tamaño de letra inicial
@@ -348,7 +350,7 @@ class _PagMainState extends State<PagPrincipal> {
           title:
           Container(
             height: 25.0,
-            width: 250,
+            width: 226,
             child: Marquee(
               text: 'Efemérides de Sonora',
               style: TextStyle(fontSize: 20),
@@ -384,7 +386,7 @@ class _PagMainState extends State<PagPrincipal> {
                   value: 'municipio',
                   child: ListTile(
                     leading: Icon(Icons.location_city),
-                    title: Text('Municipio'),
+                    title: Text('Por Municipio'),
                   ),
                 ),
                 const PopupMenuItem<String>(
@@ -428,8 +430,15 @@ class _PagMainState extends State<PagPrincipal> {
                 const PopupMenuItem<String>(
                   value: 'participa',
                   child: ListTile(
-                    leading: Icon(Icons.add),
+                    leading: Icon(Icons.add_circle),
                     title: Text('¡Participa!'),
+                  ),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'ayuda',
+                  child: ListTile(
+                    leading: Icon(Icons.help),
+                    title: Text('Ayuda'),
                   ),
                 ),
                 const PopupMenuItem<String>(
@@ -477,6 +486,13 @@ class _PagMainState extends State<PagPrincipal> {
                           builder: (context) => MunicipioPage(_fontSize)),
                     );
                     break;
+                  case 'ayuda':
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AyudaPage(_fontSize)),
+                    );
+                    break;
                 }
               },
             ),
@@ -484,7 +500,7 @@ class _PagMainState extends State<PagPrincipal> {
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
             key: UniqueKey(),
-            labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 7),
             tabs: [
               CustomTabAcon(
                   key: UniqueKey(), text: 'Acontecimientos', icon: Icons.event),
@@ -523,10 +539,11 @@ class _PagMainState extends State<PagPrincipal> {
                             });
                           },
                           style: ElevatedButton.styleFrom(),
-                          child: const Text(
+                          child: Text(
                             'Quitar filtros',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.tertiary,
                               fontSize: 15,
                               //color: Colors.white,
                             ),
@@ -717,7 +734,8 @@ class CustomTabAcon extends StatelessWidget {
             SizedBox(height: 4), // Espacio entre el icono y el texto
             Container(
               height: 18.0, // Establece la altura según sea necesario
-              child: Marquee(
+              child: Text(text, style: TextStyle(fontSize: 15)),
+              /**Marquee(
                 text: text,
                 style: TextStyle(fontSize: 15),
                 scrollAxis: Axis.horizontal,
@@ -730,7 +748,7 @@ class CustomTabAcon extends StatelessWidget {
                 accelerationCurve: Curves.linear,
                 decelerationDuration: Duration(milliseconds: 500),
                 decelerationCurve: Curves.easeOut,
-              ),
+              ),**/
             ),
           ],
         ),

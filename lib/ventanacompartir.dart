@@ -90,9 +90,9 @@ void _compartirEvento(EventoHistorico evento) {
 }
 
 void compartirApp() {
-  const  String playStoreLink = 'https://play.google.com/store/apps/details?id=<ID DE APP>'; // Reemplazar 'tu_package_name'
+  const  String playStoreLink = 'https://play.google.com/store/apps/details?id=com.redescubramossonora.Efemerides_Sonora'; // Reemplazar 'tu_package_name'
   const  String mensaje = 
     '$playStoreLink\n\n'
-    'Descarga nuestra app para estar al tanto de los eventos mas importantes de sonora!';
+    'https://play.google.com/store/apps/details?id=com.redescubramossonora.Efemerides_Sonora';
   Share.share(mensaje);
 }
