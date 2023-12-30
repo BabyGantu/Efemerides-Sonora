@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:marquee/marquee.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tutorial1/acercade.dart';
@@ -46,6 +47,7 @@ bool mostrarFiltro = false;
 bool notAcon = false;
 bool notNac = false;
 bool notDef = false;
+double _fontSize = 16.0;
 
 class MyApp extends StatefulWidget {
   @override
@@ -98,7 +100,7 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
-      home: const PagPrincipal(),
+      home:  FirstTimeScreen(_fontSize),
       initialRoute: '/',
       routes: {
         '/home': (context) => const PagPrincipal(),
@@ -117,7 +119,7 @@ class PagPrincipal extends StatefulWidget {
 class _PagMainState extends State<PagPrincipal> with SingleTickerProviderStateMixin{
   DateTime? fechaElegida;
   TextEditingController searchController = TextEditingController();
-  double _fontSize = 16.0; // Tamaño de letra inicial
+   // Tamaño de letra inicial
   bool isDarkMode = false;
 
   void _showDatePicker() async {
@@ -813,5 +815,78 @@ class CustomTabDef extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class FirstTimeScreen extends StatefulWidget {
+  final double tam_letra;
+  FirstTimeScreen(this.tam_letra);
+
+  @override
+  _FirstTimeScreenState createState() => _FirstTimeScreenState();
+}
+
+class _FirstTimeScreenState extends State<FirstTimeScreen> {
+  bool _isFirstTime = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFirstTime();
+  }
+
+  void _checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+    setState(() {
+      _isFirstTime = isFirstTime;
+    });
+
+    if (isFirstTime) {
+      prefs.setBool('isFirstTime', false);
+      _showWelcomeDialog();
+    }
+  }
+
+  void _showWelcomeDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('¡Bienvenido a tu primera vez en la app de Efemerides de Sonora!'),
+          content: Text('Si eres nuevo o deseas aprender más sobre la app, te invitamos a'
+              ' explorar la sección de ayuda. Allí encontrarás guías detalladas para aprovechar '
+              'al máximo la aplicación. ¡No dudes en consultarla para resolver tus preguntas y '
+              'sacar el máximo provecho de la experiencia con nuestra app'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cierra el diálogo
+              },
+              child: Text('Cerrar',style: TextStyle(color: Theme.of(context).colorScheme.tertiary)),
+            ),
+            TextButton(
+              onPressed: () {
+                Future.delayed(Duration.zero, () {
+                  Navigator.pop(context); // Cierra el diálogo (si aún está abierto)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AyudaPage(widget.tam_letra)),
+                  );
+                });
+              },
+              child: Text('Ir a ayuda',style: TextStyle(color: Theme.of(context).colorScheme.tertiary)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PagPrincipal();
   }
 }
