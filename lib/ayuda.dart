@@ -126,12 +126,19 @@ class _AyudaState extends State<AyudaPage> {
                       height: 1.5,
                     )),
                 SizedBox(height: 15),
-                Image.asset('assets/img/filtro.png'),
-                SizedBox(height: 15),
+
                 Text("Para facilitar tu búsqueda y proporcionarte información más específica,"
                     " hemos incorporado una función de filtrado por fecha. En la parte inferior"
-                    " derecha de la pantalla, encontrarás un botón con un ícono de calendario.\n"
-                    "Al pulsar este botón, se desplegará un calendario interactivo que te permitirá seleccionar la "
+                    " derecha de la pantalla, encontrarás un botón con un ícono de calendario.",
+                    style: TextStyle(
+                      //fontWeight: FontWeight.bold,
+                      fontSize: 3.0 + widget.tam_letra,
+                      height: 1.5,
+                    )),
+                SizedBox(height: 10),
+                Image.asset('assets/img/calendarioF.png'),
+                SizedBox(height: 10),
+                Text("Al pulsar este botón, se desplegará un calendario interactivo que te permitirá seleccionar la "
                     "fecha de interés que deseas explorar. Este filtro te ayudará a enfocarte en efemérides "
                     "asociadas a un día o mes particulares.",
                     style: TextStyle(
@@ -139,7 +146,8 @@ class _AyudaState extends State<AyudaPage> {
                       fontSize: 3.0 + widget.tam_letra,
                       height: 1.5,
                     )),
-
+                SizedBox(height: 15),
+                Image.asset('assets/img/filtro.png'),
                 SizedBox(height: 15),
                 Text("Buscador",
                     style: TextStyle(
